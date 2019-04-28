@@ -1,0 +1,10 @@
+server{
+    listen 3000;
+
+    location / { #routing rule for prod; anytime somone comes to root route
+        root /usr/share/nginx/html; #this is where production assets is served
+        index index.html index.htm; #root and index are directive
+        try_files $uri $uri/ /index.html; #get the Nginx server to work correctly when using React Router!
+    }
+}
+
