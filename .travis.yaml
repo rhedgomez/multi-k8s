@@ -1,0 +1,32 @@
+sudo: required
+services: 
+  - docker #require docker to be pre-installed, as soon as travis runs a build
+env:
+  global:
+    - SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+     
+before_install:
+  - openssl aes-256-cbc -K $encrypted_66f45e393cdf_key -iv $encrypted_66f45e393cdf_iv -in service-account.json.enc -out service-account.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;  #install google cloud SDK.
+  - source: $HOME/google-cloud-sdk/path.bash.inc #look for the default location of the downloade google cloud sdk
+  - gcloud components update kubectl #install and update kubectl inside the ci env.
+  - gcloud auth activate-service-account --key-file service-account.json #authorization with  Google Cloud. 
+                                                                        #pre-requitsite: have a service account created(service-account.json - 
+                                                                        #generated; need to be encrypted(usi Travis CLI) and upload in travis ci account) to programmatically access Google cloud account
+  - gcloud config set project multi-k8s-239016  #tell gcloud cli what project and what zone we wanted to operated on.
+  - gcloud config set compute/zone southamerica-east1-a #specify compute zone
+  -   #tell gcloud what cluster it needs to be working with, if we issue a set of kubernetes related commands.
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t rhedgomez/react-test -f /client/Dockerfile.dev ./client
+
+script: #section on how to run the actually test for the project
+  - dockerun run rhedgomez/react-test npm run test -- --coverage #override the default start command to npm run test when container is spun up.
+
+  deploy:
+    provider: script
+    script: bash ./deploy.sh
+    on:
+      branch: master
+
+

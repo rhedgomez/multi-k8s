@@ -15,7 +15,7 @@ spec:
     spec:
       containers: #provide containers that this pods that its supposed to run
         - name: client
-          image: stephengrider/multi-client #nginx image
+          image: rhedgomez/multi-client #nginx image
           ports:
             - containerPort: 3000 #port that is mapped-up to the mulit-client image.
             
