@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels: #labels that needs to be applied to every pod that it gets created.
+        component: worker
+    spec:
+      containers:
+        - name: worker
+          image: stephengrider/multi-worker
+          #inject some environment variable here to tell it  how to connect to redis.
+          #and simply just passing these environment variable when  a container is created inside of the pod
+          env: 
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service #name of the redis's clusterIPService(redis-cluster-ip-service.yaml)
+            - name: REDIS_PORT
+              value: '6379'
+
