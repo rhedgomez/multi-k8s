@@ -14,7 +14,7 @@ docker push rhedgomez/multi-worker:$SHA
 
 #kubectl apply -f k8s #i think dire nimo himo-on ang helm install, but how?
 
-helm upgrade --install --debug --wait --set image.tag=$SHA project-complex ./project-complex/
+helm upgrade --install  --wait --set image.tag=$SHA project-complex ./project-complex/
 #sh "/helm upgrade --install --wait --set image.repository=${repository},image.tag=${commitId} hello hello"
 
 #set image imperative command; to  always tell kubernetes to use the updated image
