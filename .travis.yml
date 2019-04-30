@@ -25,6 +25,7 @@ before_install:
   - ./get_helm.sh
   - helm init --service-account tiller --upgrade
   - helm list
+  - helm delete project-complex
   - docker build -t rhedgomez/react-test -f ./client/Dockerfile.dev ./client 
 
 script: #section on how to run the actually test for the project
