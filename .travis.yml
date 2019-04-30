@@ -17,8 +17,9 @@ before_install:
   - gcloud config set project multi-k8s-239016  #tell gcloud cli what project and what zone we wanted to operated on.
   - gcloud config set compute/zone southamerica-east1-a #specify compute zone
   - gcloud container clusters get-credentials multi-cluster   #tell gcloud what cluster it needs to be working with, if we issue a set of kubernetes related commands.
+  
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t rhedgomez/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t rhedgomez/react-test -f ./client/Dockerfile.dev ./client 
 
 script: #section on how to run the actually test for the project
   - docker run rhedgomez/react-test npm test -- --coverage #override the default start command to npm run test when container is spun up.
