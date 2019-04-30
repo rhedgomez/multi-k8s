@@ -23,9 +23,10 @@ before_install:
   - curl -LO https://git.io/get_helm.sh
   - chmod 700 get_helm.sh
   - ./get_helm.sh
-  - helm init --service-account tiller --upgrade
+  - helm init --service-account tiller --upgrade 
   - helm list
-  - helm delete project-complex
+  - helm delete --purge project-complex
+  - helm list
   - docker build -t rhedgomez/react-test -f ./client/Dockerfile.dev ./client 
 
 script: #section on how to run the actually test for the project
