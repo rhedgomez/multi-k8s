@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: rhedgomez/multi-client
-  tag: latest
+  tag: testing-image
   pullPolicy: IfNotPresent
 
 nameOverride: ""
