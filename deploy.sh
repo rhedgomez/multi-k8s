@@ -10,7 +10,7 @@ docker push rhedgomez/multi-client:$SHA #$SHA(GIT_SHA) uniquer version identifie
 docker push rhedgomez/multi-server:$SHA
 docker push rhedgomez/multi-worker:$SHA
  
-kubectl apply -f k8s
+kubectl apply -f k8s #i think dire nimo himo-on ang helm install, but how?
 
 #set image imperative command
 kubectl set image deployments/server-deployment server=rhedgomez/multi-server:$SHA
