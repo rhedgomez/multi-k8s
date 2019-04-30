@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations: #additonal configuration options that specificiy higher level configuration around the Ingress object, that gets created.
+    kubernetes.io/ingress.class: nginx #tell k8s to created ingress controller based on nginx project
+    nginx.ingress.kubernetes.io/rewrite-target: /$1 #how the copy of nginx behaves
+                                                  #this is doing like a rewrite before handing over the request to the api service(or the multi-server).
+                                                  #like removing '/api' out of the incoming request. Just so that we did not have to write /api on every different route onn the multi-server itself.
+spec:
+  rules:
+    - http:
+        paths: #rules saying that we do have two paths that we can match traffic to.
+          - path: /?(.*) #if http request is '/' then route traffic to multi-client pod
+            backend:
+              serviceName: client-cluster-ip-service #(from client-cluster-service-ip.yaml)   
+              servicePort: 3000 #Port(from client-cluster-service-ip.yaml)    
+          - path: /api/?(.*)  #if http request is '/api/' then route traffic to multi-server pod
+            backend:
+              serviceName: server-cluster-ip-service #from server-cluster-ip-service.yam
+              servicePort: 5000 #from server-cluster-ip-service.yaml
