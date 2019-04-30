@@ -9,7 +9,9 @@ docker push rhedgomez/multi-worker:latest
 docker push rhedgomez/multi-client:$SHA #$SHA(GIT_SHA) uniquer version identifier of the image
 docker push rhedgomez/multi-server:$SHA
 docker push rhedgomez/multi-worker:$SHA
- 
+
+helm init --service-account tiller --upgrade
+
 kubectl apply -f k8s #i think dire nimo himo-on ang helm install, but how?
 
 #set image imperative command; to  always tell kubernetes to use the updated image
@@ -18,7 +20,6 @@ kubectl set image deployments/client-deployment client=rhedgomez/multi-client:$S
 #this is how kubernetes is going to use the latest image: example: kubectl set image deployments/client-deployment client=rhedgomez/multi-client:testing-image
 kubectl set image deployments/worker-deployment worker=rhedgomez/multi-worker:$SHA
 
-helm list
 
 #server=rhedgomez/multi-server; server= is like the server container inside this deployment needs to use the image that is explicitly specified
 
