@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template: #pod template that is going to be use by every pod that is created by this deployment.
+    metadata:
+      labels: #labels that needs to be applied to every pod that it gets created.
+        component: postgres
+    spec:
+      volumes: #storage allocation
+        - name: postgres-storage
+          persistentVolumeClaim: 
+            claimName: database-persistent-volume-claim
+            #assign storage for use by all the different containers that are in use by the pod.
+            
+      containers: #container defintion
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432
+          #when this pod is created its going to need to look at all the different storage options
+          #that are available
+
+          
+          #assign storage for use by all the different containers that are in use by the pod
+          #name: postgres-storage - meaning go back out to the volumes entry and find some piece of storage that we just asked K8s for.
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data #where inside of the container this storage(postgres-storage)should be made available
+                                                  #anything that the container stores inside /data will be actually stores inside of the volume(claimName: database-persistent-volume-claim)
+              subPath: postgres #any data that is inside the container that is stored in mountPath:/var/lib/postgresql/data is going to be stored inside of a folder called: subPath:postgres inside of the actual persistentVolumeClaim name:database-persistent-volume-claim
+          
+          env: #telling postgres when created to use these environment variables:
+            - name: PGPASSWORD #env variable that we are going to pass into the container and will instead overried the default password to newly set my  the envinroment variable: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword #kubectl get secrets
+                  key: PGPASSWORD 
+
+

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cluster-ip-service #hostname and the port that is going to be use by multi-worker to connect to redis pod via ClusterIP
+spec:
+  type: ClusterIP
+  selector: #provide a selector so that the service that we are creating knows what set of pod it
+          #is supposed to be providing access to. in this case we provide access to multi-client pod
+    component: redis
+
+  ports: #expose ports that the cluster ip  service that is going to expose be availble on.
+    - port: 6379 #port property is going to be how other pods our other objects inside of our cluster are going to access the pod that we are kinda governing access to.
+      targetPort: 6379  #targetPort property:the port on the target pod that we are providing access to.
+    
+      

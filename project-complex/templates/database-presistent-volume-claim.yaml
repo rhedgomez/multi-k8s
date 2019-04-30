@@ -1,0 +1,13 @@
+#below is like advertising an option for storage that can be use for storage by all of the  different pods in our application
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-persistent-volume-claim
+spec:
+  accessModes: #kubernetes will find an instance of storage that supports the access mode below.
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi #kubernetes is going to find a storage option either one that is provisioned ahead of time or created on the fly that has 2 GB of space.
+
+      
