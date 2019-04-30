@@ -23,7 +23,7 @@ before_install:
   - curl -LO https://git.io/get_helm.sh
   - chmod 700 get_helm.sh
   - ./get_helm.sh
-  - helm init --service-account tiller --upgrade
+  - helm init --service-account tiller --upgrade 
   - helm list
   - docker build -t rhedgomez/react-test -f ./client/Dockerfile.dev ./client 
 
