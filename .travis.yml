@@ -19,11 +19,14 @@ before_install:
   - gcloud container clusters get-credentials multi-cluster   #tell gcloud what cluster it needs to be working with, if we issue a set of kubernetes related commands.
   
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t rhedgomez/react-test -f ./client/Dockerfile.dev ./client 
-
   #HELM part
+  - curl -LO https://git.io/get_helm.sh
+  - chmod 700 get_helm.sh
+  - ./get_helm.sh
   - helm init --service-account tiller --upgrade
   - helm list
+  - docker build -t rhedgomez/react-test -f ./client/Dockerfile.dev ./client 
+
 script: #section on how to run the actually test for the project
   - docker run rhedgomez/react-test npm test -- --coverage #override the default start command to npm run test when container is spun up.
 

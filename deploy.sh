@@ -10,8 +10,6 @@ docker push rhedgomez/multi-client:$SHA #$SHA(GIT_SHA) uniquer version identifie
 docker push rhedgomez/multi-server:$SHA
 docker push rhedgomez/multi-worker:$SHA
 
-helm init --service-account tiller --upgrade
-
 kubectl apply -f k8s #i think dire nimo himo-on ang helm install, but how?
 
 #set image imperative command; to  always tell kubernetes to use the updated image
