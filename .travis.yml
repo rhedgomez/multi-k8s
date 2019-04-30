@@ -25,7 +25,7 @@ before_install:
   - ./get_helm.sh
   - helm init --service-account tiller --upgrade 
   - helm list
-  - helm delete --purge project-complex
+  - helm delete project-complex
   - helm list
   - docker build -t rhedgomez/react-test -f ./client/Dockerfile.dev ./client 
 
