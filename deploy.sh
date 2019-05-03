@@ -14,10 +14,10 @@ docker push rhedgomez/multi-worker:$SHA
 
 #kubectl apply -f k8s 
 
-helm upgrade --install  --wait --debug --set image.tag=$SHA project-complex ./project-complex/
+#helm upgrade --install  --wait --debug --set image.tag=$SHA project-complex ./project-complex/
 kubectl get deployments
 #sh "/helm upgrade --install --wait --set image.repository=${repository},image.tag=${commitId} hello hello"
-
+helm upgrade --install  --wait --set image.tag=$SHA project-complex helm-project-complex/project-complex
 #set image imperative command; to  always tell kubernetes to use the updated image
 #kubectl set image deployments/server-deployment server=rhedgomez/multi-server:$SHA
 #kubectl set image deployments/client-deployment client=rhedgomez/multi-client:$SHA
