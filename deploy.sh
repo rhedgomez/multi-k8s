@@ -16,7 +16,6 @@ docker push rhedgomez/multi-worker:$SHA
 
 #helm upgrade --install  --wait --debug --set image.tag=$SHA project-complex ./project-complex/
 kubectl get deployments
-#sh "/helm upgrade --install --wait --set image.repository=${repository},image.tag=${commitId} hello hello"
 helm repo add helm-project-complex https://rhedgomez.github.io/helm-project-complex/
 helm repo update
 helm upgrade --install  --wait --set image.tag=$SHA fibonacci-app helm-project-complex/project-complex
