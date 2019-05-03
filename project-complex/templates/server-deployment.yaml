@@ -15,7 +15,7 @@ spec: #customize exactly how this deployment behaves.
     spec: #customize the behavior of each of the pods that gets created.
       containers: #provide containers that this pods that its supposed to run
       - name: server
-        image: stephengrider/multi-server 
+        image: rhedgomez/multi-server 
         ports:
           - containerPort: 5000
         env:  

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: stephengrider/multi-worker
+          image: rhedgomez/multi-worker
           #inject some environment variable here to tell it  how to connect to redis.
           #and simply just passing these environment variable when  a container is created inside of the pod
           env: 
